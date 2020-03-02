@@ -13,9 +13,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ReviewServiceImpl implements ReviewService {
     private static final String FILE_PATH = "src/main/resources/Reviews.csv";
     private final ReviewRepository reviewRepository;
@@ -49,20 +52,19 @@ public class ReviewServiceImpl implements ReviewService {
                     = new BufferedReader(new InputStreamReader(fileInputStream));
             reviewsList = bufferedReader.lines().skip(1).map(mapLineToReview)
                     .collect(Collectors.toList());
-            //TODO probably try to save each mapped entity to DB instead of collecting it to list;
-            //TODO UPD Dis mudafucka works too long. Probably better use parallel streams or
+            //TODO works too long. Probably better use parallel streams or
             // some custom library for csv paring
             bufferedReader.close();
         } catch (IOException e) {
             throw new RuntimeException("File not found", e);
         }
         reviewRepository.saveAll(reviewsList);
+        log.info("All data has been saved at" + LocalDateTime.now());
         return reviewsList;
     }
 
     private Function<String, Review> mapLineToReview = (line) -> {
         String[] reviewFields = line.concat(" ").split(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-        //TODO Still some troubles with parsing data
         Review review = new Review();
         review.setProductId(reviewFields[1]);
         review.setUserId(reviewFields[2]);

@@ -1,6 +1,7 @@
 package com.mate.academy.reviewsanalyzer.model;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,5 +22,6 @@ public class Review {
     private Integer score;
     private LocalDateTime time;
     private String summary;
+    @Column(columnDefinition = "TEXT")
     private String text;
 }

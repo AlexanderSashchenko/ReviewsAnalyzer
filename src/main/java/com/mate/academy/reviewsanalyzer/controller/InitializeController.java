@@ -1,10 +1,14 @@
 package com.mate.academy.reviewsanalyzer.controller;
 
 import com.mate.academy.reviewsanalyzer.service.ReviewService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
+@Slf4j
 public class InitializeController {
     private final ReviewService reviewService;
 
@@ -14,7 +18,8 @@ public class InitializeController {
 
     @GetMapping("/init")
     public String initializeFileReading() {
+        log.info("Started file reading at" + LocalDateTime.now());
         reviewService.readFromResourceFile();
-        return "File has been read";
+        return "File has been read at" + LocalDateTime.now();
     }
 }
