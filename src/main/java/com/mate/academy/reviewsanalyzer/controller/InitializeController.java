@@ -1,11 +1,10 @@
 package com.mate.academy.reviewsanalyzer.controller;
 
 import com.mate.academy.reviewsanalyzer.service.ReviewService;
+import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 @RestController
 @Slf4j
